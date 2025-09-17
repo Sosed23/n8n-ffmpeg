@@ -1,8 +1,8 @@
 version: '3.8'
 
 volumes:
-  n8n_db_storage:  # <-- ДОБАВЛЕНА ЭТА СТРОКА
-  n8n_storage:
+  n8n_db_storage:
+  n8n_n8_storage:
 
 services:
   postgres:
@@ -45,7 +45,7 @@ services:
     ports:
       - 5678:5678
     volumes:
-      - n8n_storage:/home/node/.n8n
+      - n8n_n8n_storage:/home/node/.n8n
     depends_on:
       postgres:
         condition: service_healthy
