@@ -2,7 +2,7 @@ version: '3.8'
 
 volumes:
   n8n_db_storage:
-  n8n_n8_storage:
+  n8n_n8n_storage:
 
 services:
   postgres:
