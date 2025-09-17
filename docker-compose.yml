@@ -1,9 +1,7 @@
-# Новый docker-compose.yml
 version: '3.8'
 
 volumes:
-  # Этот том вам больше не нужен, можно его удалить, но он не помешает
-  db_storage:
+  n8n_db_storage:  # <-- ДОБАВЛЕНА ЭТА СТРОКА
   n8n_storage:
 
 services:
@@ -19,7 +17,6 @@ services:
       - POSTGRES_NON_ROOT_USER
       - POSTGRES_NON_ROOT_PASSWORD
     volumes:
-      # ИЗМЕНЁННАЯ СТРОКА: Указываем на старый том с данными
       - n8n_db_storage:/var/lib/postgresql/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
     healthcheck:
@@ -48,8 +45,6 @@ services:
     ports:
       - 5678:5678
     volumes:
-      # Эту строку можно тоже изменить, если вы хотите подгрузить старые данные n8n.
-      # Но так как рабочие процессы хранятся в БД, это не так критично.
       - n8n_storage:/home/node/.n8n
     depends_on:
       postgres:
