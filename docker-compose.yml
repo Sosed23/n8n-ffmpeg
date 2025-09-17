@@ -20,7 +20,7 @@ services:
       - db_storage:/var/lib/postgresql/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTG-RES_USER} -d ${POSTGRES_DB}']
       interval: 5s
       timeout: 5s
       retries: 10
@@ -28,14 +28,13 @@ services:
       - nginx_proxy_manager_default
 
   n8n:
-    # --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-    # Вместо 'image:' мы используем 'build:' для сборки из Dockerfile
     build:
       context: .
-    # image: docker.n8n.io/n8nio/n8n  <-- Старая строка удалена
-    # ----------------------
     restart: always
     environment:
+      # --- ДОБАВЛЕНА СТРОКА ДЛЯ ИСПРАВЛЕНИЯ ОШИБКИ СБОРКИ ---
+      - DOCKER_BUILDKIT=0
+      # ----------------------------------------------------
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
